@@ -1,7 +1,3 @@
-[submodule "fly-feign"]
-	path = fly-spring/common-feign
-	url = git@github.com:FlyInWind1/fly-spring.git
-	branch = common-feign
 [submodule "fly-redis"]
 	path = fly-spring/redis
 	url = git@github.com:FlyInWind1/fly-spring.git
