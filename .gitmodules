@@ -1,0 +1,12 @@
+[submodule "buildSrc"]
+	path = buildSrc
+	url = git@github.com:FlyInWind1/fly-spring.git
+	branch = buildSrc
+[submodule "fly-common"]
+	path = spring-common
+	url = git@github.com:FlyInWind1/fly-spring.git
+	branch = fly-spring/common
+[submodule "fly-redis"]
+	path = fly-spring/redis
+	url = git@github.com:FlyInWind1/fly-spring.git
+	branch = spring-redis

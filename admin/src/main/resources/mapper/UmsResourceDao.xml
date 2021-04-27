@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fly.mall.modules.admin.dao.UmsResourceDao">
+    <select id="listByAdminId" resultType="fly.mall.modules.admin.pojo.po.UmsResourcePo">
+        select r.*
+        from ums_admin_role_relation ror
+                 inner join ums_role ro on ro.id = ror.role_id and ro.delete_flag = false
+                 inner join ums_role_resource_relation rer on ror.role_id = rer.role_id
+                 inner join ums_resource r on r.id = rer.role_id and r.delete_flag = false
+    </select>
+</mapper>

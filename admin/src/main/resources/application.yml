@@ -1,0 +1,21 @@
+server:
+  http2:
+    enabled: true
+spring:
+  profiles:
+    active: fly-common,config
+  datasource:
+#    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+#    url: jdbc:p6spy:mariadb://127.0.0.1:3306/flowable-demo
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://127.0.0.1:5432/fly_mall
+    username: postgres
+    password:
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+#    database-id: id
+  global-config:
+    db-config:
+      logic-delete-field: delete_flag
