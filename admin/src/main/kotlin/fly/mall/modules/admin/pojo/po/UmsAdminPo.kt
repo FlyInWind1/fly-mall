@@ -1,11 +1,13 @@
 package fly.mall.modules.admin.pojo.po
 
+import com.baomidou.mybatisplus.annotation.TableName
 import fly.mall.modules.admin.pojo.dto.UmsAdminDto
 import fly.spring.common.pojo.BasePo
 import org.mapstruct.Mapper
 import org.mapstruct.factory.Mappers
 import java.time.LocalDateTime
 
+@TableName("ums_admin")
 class UmsAdminPo : BasePo() {
 
     var username: String? = null

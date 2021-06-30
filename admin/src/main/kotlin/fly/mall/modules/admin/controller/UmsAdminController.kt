@@ -12,7 +12,6 @@ import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Mono
 import java.nio.file.attribute.GroupPrincipal
-import java.util.*
 import java.util.stream.Collectors
 import javax.security.auth.login.CredentialExpiredException
 
@@ -24,13 +23,13 @@ class UmsAdminController(
     private val roleService: UmsRoleService
 ) {
 
-    @PostMapping( "register")
+    @PostMapping("register")
     fun register(@Validated userDto: UmsAdminDto): Mono<R<UmsAdminPo?>> {
         return adminService.register(userDto).rok()
     }
 
     @PostMapping("login")
-    fun login(@RequestBody @Validated userDto: UmsAdminDto, locale: Locale): Mono<R<Map<String, String>>> {
+    fun login(@RequestBody @Validated userDto: UmsAdminDto): Mono<R<Map<String, String>>> {
         val token = adminService.login(userDto.username, userDto.password)
         return mapOf("token" to token).rok()
     }

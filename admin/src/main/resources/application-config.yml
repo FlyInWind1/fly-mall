@@ -1,3 +1,0 @@
-redis:
-  expire:
-    auth-code: 60

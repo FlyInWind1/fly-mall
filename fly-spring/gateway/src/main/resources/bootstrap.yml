@@ -1,0 +1,15 @@
+server:
+  port: 9999
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    nacos:
+      server-addr: ${NACOS_HOST:registry}:${NACOS_PORT:8848}
+      config:
+        file-extension: yml
+        shared-configs:
+          - fly-spring-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+  profiles:
+    active: dev

@@ -17,8 +17,8 @@ plugins {
     kotlin("plugin.spring") version V.kotlin
     kotlin("kapt") version V.kotlin
 
-    id("org.springframework.boot") version V.springBoot
     id("io.spring.dependency-management") version V.dependencyManagement
+    id("org.springframework.boot") version V.springBoot
 }
 
 allprojects {

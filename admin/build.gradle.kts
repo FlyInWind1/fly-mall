@@ -2,12 +2,18 @@ plugins {
     kotlin("jvm")
     kotlin("plugin.spring")
 
-    id("org.springframework.boot")
     id("io.spring.dependency-management")
+    id("org.springframework.boot")
 }
 
 group = "flyinwind"
 version = "0.0.1-SNAPSHOT"
+
+dependencyManagement {
+    imports{
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${V.springCloud}")
+    }
+}
 
 dependencies {
     //kotlin
@@ -18,7 +24,7 @@ dependencies {
     implementation(project(":fly-spring:common"))
     implementation(project(":fly-spring:redis"))
     implementation(project(":fly-spring:security"))
-    implementation(project(":fly-spring:elasticsearch"))
+//    implementation(project(":fly-spring:elasticsearch"))
 
     //spring
     implementation("org.springframework.boot:spring-boot-starter-webflux")
@@ -27,13 +33,14 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 
-//    val ap=allprojects
-//    println(ap)
-//    println(project.allprojects)
+    implementation("org.springframework.cloud:spring-cloud-starter-bootstrap")
+    // spring cloud alibaba
+    implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:${V.springCloudAlibaba}")
+    implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:${V.springCloudAlibaba}")
+
     //database
     implementation("com.baomidou:mybatis-plus-boot-starter:${V.mybatisPlus}")
-//    implementation("mybatis-plus:mybatis-plus-boot-starter")
-    implementation("org.postgresql:postgresql:${V.postgresql}")
+    implementation("org.postgresql:postgresql")
 
     //spring附加包
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
