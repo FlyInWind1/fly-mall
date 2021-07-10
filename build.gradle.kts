@@ -2,9 +2,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
     repositories {
-        maven("https://maven.aliyun.com/nexus/content/repositories/gradle-plugin")
-        gradlePluginPortal()
-        mavenCentral()
+        mavenLocal()
+        maven("https://maven.aliyun.com/nexus/content/groups/public/")
+        maven("https://maven.aliyun.com/nexus/content/repositories/gradle-plugin/")
     }
 //    dependencies {
 //        classpath("se.patrikerdes:gradle-use-latest-versions-plugin:+")
