@@ -18,7 +18,6 @@ dependencyManagement {
 dependencies {
     //kotlin
     implementation(kotlin("reflect"))
-    implementation(kotlin("stdlib-jdk8"))
 
     //fly-spring
     implementation(project(":fly-spring:common"))
@@ -48,10 +47,10 @@ dependencies {
 
     //工具
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions:${V.reactorKotlinExtensions}")
+//    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions:${V.reactorKotlinExtensions}")
     //工具
-    implementation("org.apache.commons:commons-lang3:${V.commonsLang3}")
-    implementation("org.apache.commons:commons-collections4:${V.commonsCollections4}")
+    implementation("org.apache.commons:commons-lang3")
+    implementation("org.apache.commons:commons-collections4")
     implementation("io.github.microutils:kotlin-logging:${V.kotlinLogging}")
     implementation("org.mapstruct:mapstruct:${V.mapstruct}")
     annotationProcessor("org.mapstruct:mapstruct-processor:${V.mapstruct}")
