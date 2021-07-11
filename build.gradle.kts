@@ -6,10 +6,6 @@ buildscript {
         maven("https://maven.aliyun.com/nexus/content/groups/public/")
         maven("https://maven.aliyun.com/nexus/content/repositories/gradle-plugin/")
     }
-//    dependencies {
-//        classpath("se.patrikerdes:gradle-use-latest-versions-plugin:+")
-//        classpath("com.github.ben-manes:gradle-versions-plugin:+")
-//    }
 }
 
 plugins {
@@ -18,32 +14,18 @@ plugins {
     kotlin("kapt") version V.kotlin
 
     id("io.spring.dependency-management") version V.dependencyManagement
-    id("org.springframework.boot") version V.springBoot
+    // not apply in root project otherwise it will error can not find spring main class when :build
+    id("org.springframework.boot") version V.springBoot apply false
 }
 
 allprojects {
-//apply(plugin = "com.github.ben-manes.versions")
-//    apply {
-//        plugin("se.patrikerdes.use-latest-versions")
-//        plugin("com.github.ben-manes.versions")
-//    }
-
     repositories {
         mavenLocal()
         maven("https://maven.aliyun.com/nexus/content/groups/public/")
     }
 
-//    afterEvaluate {
-//        configurations.compileOnly {
-//            extendsFrom(configurations.annotationProcessor.get())
-//        }
-//    }
-
     configurations.all {
-        exclude("org.junit.vintage", "junit-vintage-engine")
         exclude("org.springframework.boot", "spring-boot-starter-logging")
-        //myBatis plus 在依赖fastjson
-        exclude("com.alibaba", "fastjson")
     }
 
     tasks.withType<KotlinCompile> {
