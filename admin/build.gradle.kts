@@ -9,12 +9,6 @@ plugins {
 group = "flyinwind"
 version = "0.0.1-SNAPSHOT"
 
-dependencyManagement {
-    imports{
-        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${V.springCloud}")
-    }
-}
-
 dependencies {
     //kotlin
     implementation(kotlin("reflect"))

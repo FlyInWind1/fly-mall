@@ -1,3 +1,4 @@
+import io.spring.gradle.dependencymanagement.DependencyManagementPlugin
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
@@ -22,6 +23,18 @@ allprojects {
     repositories {
         mavenLocal()
         maven("https://maven.aliyun.com/nexus/content/groups/public/")
+    }
+
+    // manage dependencies version by bom
+    afterEvaluate {
+        if (plugins.hasPlugin(DependencyManagementPlugin::class)) {
+            dependencyManagement {
+                imports {
+                    mavenBom("org.springframework.boot:spring-boot-parent:${V.springBoot}")
+                    mavenBom("org.springframework.cloud:spring-cloud-dependencies:${V.springCloud}")
+                }
+            }
+        }
     }
 
     configurations.all {
