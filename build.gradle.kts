@@ -31,7 +31,7 @@ allprojects {
             dependencyManagement {
                 imports {
                     mavenBom("org.springframework.boot:spring-boot-parent:${V.springBoot}")
-                    mavenBom("org.springframework.cloud:spring-cloud-dependencies:${V.springCloud}")
+                    mavenBom("org.springframework.cloud:spring-cloud-dependencies:${V.springCloudDependencies}")
                 }
             }
         }
