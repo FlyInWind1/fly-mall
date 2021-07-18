@@ -13,7 +13,6 @@ version = "0.0.1-SNAPSHOT"
 
 dependencies {
     implementation(kotlin("reflect"))
-    implementation(kotlin("stdlib-jdk8"))
 
     implementation(project(":fly-spring:common"))
 //    implementation(project(":fly-spring:security"))
