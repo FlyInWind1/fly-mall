@@ -10,9 +10,6 @@ group = "flyinwind"
 version = "0.0.1-SNAPSHOT"
 
 dependencies {
-    //kotlin
-    implementation(kotlin("reflect"))
-
     //fly-spring
     implementation(project(":fly-spring:common"))
     implementation(project(":fly-spring:redis"))
@@ -44,7 +41,7 @@ dependencies {
 //    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions:${V.reactorKotlinExtensions}")
     //工具
     implementation("org.apache.commons:commons-lang3")
-    implementation("org.apache.commons:commons-collections4")
+    implementation("org.apache.commons:commons-collections4:${V.commonsCollection4}")
     implementation("io.github.microutils:kotlin-logging:${V.kotlinLogging}")
     implementation("org.mapstruct:mapstruct:${V.mapstruct}")
     annotationProcessor("org.mapstruct:mapstruct-processor:${V.mapstruct}")
