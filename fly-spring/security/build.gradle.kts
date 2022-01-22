@@ -1,14 +1,16 @@
 plugins {
     kotlin("jvm")
     kotlin("plugin.spring")
+
+    id("io.spring.dependency-management")
+    id("org.springframework.boot")
 }
 
 group = "flyinwind"
 version = "0.0.1"
 
 dependencies {
-    api(kotlin("stdlib-jdk8"))
-    implementation(project(":fly-spring:common"))
+    implementation(project(":fly-spring:common-core"))
 
     api("org.springframework.boot:spring-boot-starter-security:${V.springBoot}")
     api("org.springframework.boot:spring-boot-starter-json:${V.springBoot}")
@@ -18,7 +20,7 @@ dependencies {
     runtimeOnly("io.jsonwebtoken:jjwt-impl:${V.jjwt}")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:${V.jjwt}")
 
-    implementation("org.apache.commons:commons-lang3:${V.commonsLang3}")
+    implementation("org.apache.commons:commons-lang3")
     implementation("io.github.microutils:kotlin-logging:${V.kotlinLogging}")
 }
 

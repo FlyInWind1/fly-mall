@@ -1,5 +1,6 @@
 package fly.mall.modules.admin.controller
 
+import cn.hutool.extra.spring.SpringUtil
 import fly.mall.modules.admin.pojo.dto.UmsAdminDto
 import fly.mall.modules.admin.pojo.po.UmsAdminPo
 import fly.mall.modules.admin.pojo.vo.LoginInfoVo
@@ -45,5 +46,11 @@ class UmsAdminController(
         vo.icon = admin.icon
         vo.roles = roleService.listByAdminId(adminId).stream().map { it.name!! }.collect(Collectors.toList())
         return vo.rok()
+    }
+
+    @GetMapping("feignTest")
+    fun feignTest(): Mono<String> {
+        val feignTest = SpringUtil.getBean(FeignTest::class.java)
+        return feignTest.get()
     }
 }

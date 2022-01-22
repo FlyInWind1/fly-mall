@@ -9,37 +9,18 @@ plugins {
 group = "flyinwind"
 version = "0.0.1-SNAPSHOT"
 
-dependencyManagement{
-    imports{
-        mavenBom("io.r2dbc:r2dbc-bom:Arabba-SR12")
-    }
-}
-
 dependencies {
     //fly-spring
     implementation(project(":fly-spring:common-core"))
-    implementation(project(":fly-spring:redis"))
-    implementation(project(":fly-spring:security"))
-    implementation(project(":fly-spring:common-feign"))
 
     //spring
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-log4j2")
-    implementation("org.springframework.boot:spring-boot-starter-validation")
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 
-    implementation("org.springframework.cloud:spring-cloud-starter-bootstrap")
-    // spring cloud alibaba
-    implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:${V.springCloudAlibaba}")
-    implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:${V.springCloudAlibaba}")
-
     //database
-//    implementation("com.baomidou:mybatis-plus-boot-starter:${V.mybatisPlus}")
+    implementation("com.baomidou:mybatis-plus-boot-starter:${V.mybatisPlus}")
     implementation("org.postgresql:postgresql")
-
-    implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
-    implementation("io.r2dbc:r2dbc-postgresql")
 
     //spring附加包
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
@@ -52,10 +33,8 @@ dependencies {
     implementation("org.apache.commons:commons-lang3")
     implementation("org.apache.commons:commons-collections4:${V.commonsCollection4}")
     implementation("io.github.microutils:kotlin-logging:${V.kotlinLogging}")
-//    implementation("org.mapstruct:mapstruct:${V.mapstruct}")
-//    annotationProcessor("org.mapstruct:mapstruct-processor:${V.mapstruct}")
 
-    implementation("io.projectreactor:reactor-tools")
+
 }
 
 tasks.withType<Test> {

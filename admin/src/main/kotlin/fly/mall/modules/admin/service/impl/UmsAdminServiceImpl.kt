@@ -1,11 +1,10 @@
 package fly.mall.modules.admin.service.impl
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl
 import fly.mall.common.config.AdminUserDetail
 import fly.mall.common.i18n.AdminI18n
-import fly.mall.modules.admin.dao.UmsAdminDao
 import fly.mall.modules.admin.pojo.dto.UmsAdminDto
 import fly.mall.modules.admin.pojo.po.UmsAdminPo
+import fly.mall.modules.admin.reposiory.UmsAdminRepository
 import fly.mall.modules.admin.service.UmsAdminService
 import fly.mall.modules.admin.service.UmsResourceService
 import fly.spring.common.exception.GeneralException
@@ -23,17 +22,19 @@ import org.springframework.stereotype.Service
 class UmsAdminServiceImpl(
     private val passwordEncoder: PasswordEncoder,
     private val resourceService: UmsResourceService,
+    private val umsAdminRepository: UmsAdminRepository,
     private val jwtUtil: JwtUtil
-) : ServiceImpl<UmsAdminDao, UmsAdminPo>(), UmsAdminService {
+) : UmsAdminService {
 
-    override fun register(userDto: UmsAdminDto): UmsAdminPo {
-        val username = userDto.username
+    override fun register(dto: UmsAdminDto): UmsAdminPo {
+        val username = dto.username
+        umsAdminRepository.findByUsername(dto.username)
         val userList = ktQuery().eq(UmsAdminPo::username, username).list()
         if (CollectionUtils.isNotEmpty(userList)) {
             throw GeneralException(AdminI18n.usernameHasBeRegistered(username))
         }
-        val userPo = UmsAdminPo.fromDto(userDto)
-        userPo.password = passwordEncoder.encode(userDto.password)
+        val userPo = UmsAdminPo.fromDto(dto)
+        userPo.password = passwordEncoder.encode(dto.password)
         this.save(userPo)
         return userPo
     }
