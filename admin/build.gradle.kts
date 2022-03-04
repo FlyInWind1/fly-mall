@@ -35,7 +35,7 @@ dependencies {
     implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:${V.springCloudAlibaba}")
 
     //database
-//    implementation("com.baomidou:mybatis-plus-boot-starter:${V.mybatisPlus}")
+    implementation("com.baomidou:mybatis-plus-boot-starter:${V.mybatisPlus}")
     implementation("org.postgresql:postgresql")
 
     implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
