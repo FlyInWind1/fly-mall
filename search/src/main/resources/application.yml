@@ -1,0 +1,21 @@
+server:
+  http2:
+    enabled: true
+spring:
+  profiles:
+    active: fly-common,config
+  datasource:
+    #    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+    #    url: jdbc:p6spy:mariadb://127.0.0.1:3306/flowable-demo
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://127.0.0.1:5432/fly_mall
+    username: postgres
+    password:
+  elasticsearch:
+    rest:
+      uris: 127.0.0.1:9200
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+  type-aliases-package: fly.mall.modules.search.pojo
