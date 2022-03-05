@@ -1,7 +1,9 @@
 package fly.mall.modules.admin.service.impl
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl
 import fly.mall.common.config.AdminUserDetail
 import fly.mall.common.i18n.AdminI18n
+import fly.mall.modules.admin.dao.UmsAdminDao
 import fly.mall.modules.admin.pojo.dto.UmsAdminDto
 import fly.mall.modules.admin.pojo.po.UmsAdminPo
 import fly.mall.modules.admin.reposiory.UmsAdminRepository
@@ -11,6 +13,7 @@ import fly.spring.common.exception.GeneralException
 import fly.spring.common.exception.LoginException
 import fly.spring.common.exception.UnknownException
 import fly.spring.security.util.JwtUtil
+import mu.KotlinLogging
 import org.apache.commons.collections4.CollectionUtils
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.AuthenticationException
@@ -24,7 +27,10 @@ class UmsAdminServiceImpl(
     private val resourceService: UmsResourceService,
     private val umsAdminRepository: UmsAdminRepository,
     private val jwtUtil: JwtUtil
-) : UmsAdminService {
+) : ServiceImpl<UmsAdminDao, UmsAdminPo>(), UmsAdminService {
+    companion object {
+        val log = KotlinLogging.logger { }
+    }
 
     override fun register(dto: UmsAdminDto): UmsAdminPo {
         val username = dto.username
