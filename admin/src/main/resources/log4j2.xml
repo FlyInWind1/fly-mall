@@ -22,8 +22,6 @@
         <Logger name="org.springframework.boot.actuate.endpoint.jmx" level="warn" />-->
 
         <Logger name="fly" level="debug" />
-        <Logger name="com.apache.ibatis" level="debug" />
-        <Logger name="org.flowable.engine.impl.persistence.entity" level="debug" />
         <Root level="info">
             <AppenderRef ref="Console" />
         </Root>

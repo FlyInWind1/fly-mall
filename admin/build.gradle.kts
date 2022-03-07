@@ -9,8 +9,8 @@ plugins {
 group = "flyinwind"
 version = "0.0.1-SNAPSHOT"
 
-dependencyManagement{
-    imports{
+dependencyManagement {
+    imports {
         mavenBom("io.r2dbc:r2dbc-bom:Arabba-SR12")
     }
 }
@@ -52,8 +52,8 @@ dependencies {
     implementation("org.apache.commons:commons-lang3")
     implementation("org.apache.commons:commons-collections4:${V.commonsCollection4}")
     implementation("io.github.microutils:kotlin-logging:${V.kotlinLogging}")
-//    implementation("org.mapstruct:mapstruct:${V.mapstruct}")
-//    annotationProcessor("org.mapstruct:mapstruct-processor:${V.mapstruct}")
+    implementation("org.mapstruct:mapstruct:${V.mapstruct}")
+    annotationProcessor("org.mapstruct:mapstruct-processor:${V.mapstruct}")
 
     implementation("io.projectreactor:reactor-tools")
 }
