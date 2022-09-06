@@ -6,7 +6,6 @@ import fly.mall.common.i18n.AdminI18n
 import fly.mall.modules.admin.dao.UmsAdminDao
 import fly.mall.modules.admin.pojo.dto.UmsAdminDto
 import fly.mall.modules.admin.pojo.po.UmsAdminPo
-import fly.mall.modules.admin.reposiory.UmsAdminRepository
 import fly.mall.modules.admin.service.UmsAdminService
 import fly.mall.modules.admin.service.UmsResourceService
 import fly.spring.common.exception.GeneralException
@@ -25,7 +24,7 @@ import org.springframework.stereotype.Service
 class UmsAdminServiceImpl(
     private val passwordEncoder: PasswordEncoder,
     private val resourceService: UmsResourceService,
-    private val umsAdminRepository: UmsAdminRepository,
+//    private val umsAdminRepository: UmsAdminRepository,
     private val jwtUtil: JwtUtil
 ) : ServiceImpl<UmsAdminDao, UmsAdminPo>(), UmsAdminService {
     companion object {
@@ -34,7 +33,7 @@ class UmsAdminServiceImpl(
 
     override fun register(dto: UmsAdminDto): UmsAdminPo {
         val username = dto.username
-        umsAdminRepository.findByUsername(dto.username)
+//        umsAdminRepository.findByUsername(dto.username)
         val userList = ktQuery().eq(UmsAdminPo::username, username).list()
         if (CollectionUtils.isNotEmpty(userList)) {
             throw GeneralException(AdminI18n.usernameHasBeRegistered(username))

@@ -1,0 +1,21 @@
+server:
+  port: 9999
+  http2:
+    enabled: true
+
+spring:
+  application:
+    name: mall-admin
+  main:
+    lazy-initialization: true
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/fly_mall
+    username: postgres
+    password: zdh
+
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-field: delete_flag

@@ -9,11 +9,11 @@ plugins {
 group = "flyinwind"
 version = "0.0.1-SNAPSHOT"
 
-dependencyManagement {
-    imports {
-        mavenBom("io.r2dbc:r2dbc-bom:Arabba-SR12")
-    }
-}
+//dependencyManagement {
+//    imports {
+//        mavenBom("io.r2dbc:r2dbc-bom:Arabba-SR12")
+//    }
+//}
 
 dependencies {
     //fly-spring
@@ -29,17 +29,17 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 
-    implementation("org.springframework.cloud:spring-cloud-starter-bootstrap")
+//    implementation("org.springframework.cloud:spring-cloud-starter-bootstrap")
     // spring cloud alibaba
-    implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:${V.springCloudAlibaba}")
-    implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:${V.springCloudAlibaba}")
+//    implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:${V.springCloudAlibaba}")
+//    implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:${V.springCloudAlibaba}")
 
     //database
     implementation("com.baomidou:mybatis-plus-boot-starter:${V.mybatisPlus}")
     implementation("org.postgresql:postgresql")
 
-    implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
-    implementation("io.r2dbc:r2dbc-postgresql")
+//    implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
+//    implementation("io.r2dbc:r2dbc-postgresql")
 
     //spring附加包
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
