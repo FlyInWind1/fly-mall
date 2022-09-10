@@ -56,6 +56,8 @@ dependencies {
     annotationProcessor("org.mapstruct:mapstruct-processor:${V.mapstruct}")
 
     implementation("io.projectreactor:reactor-tools")
+
+    testImplementation("io.xjar:xjar:4.0.2-SNAPSHOT")
 }
 
 tasks.withType<Test> {

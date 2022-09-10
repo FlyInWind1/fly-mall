@@ -4,8 +4,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 buildscript {
     repositories {
         mavenLocal()
-        maven("https://maven.aliyun.com/nexus/content/groups/public/")
-        maven("https://maven.aliyun.com/nexus/content/repositories/gradle-plugin/")
+        maven("https://maven.aliyun.com/repository/gradle-plugin")
+        maven("https://maven.aliyun.com/repository/public")
     }
 }
 
@@ -21,8 +21,8 @@ plugins {
 
 allprojects {
     repositories {
+        maven("https://maven.aliyun.com/repository/public")
         mavenLocal()
-        maven("https://maven.aliyun.com/nexus/content/groups/public/")
     }
 
     // manage dependencies version by bom
@@ -44,7 +44,7 @@ allprojects {
     tasks.withType<KotlinCompile> {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xjsr305=strict")
-            jvmTarget = "16"
+            jvmTarget = "17"
         }
     }
 }

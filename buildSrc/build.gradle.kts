@@ -1,8 +1,8 @@
 buildscript {
     repositories {
         mavenLocal()
-        maven("https://maven.aliyun.com/nexus/content/groups/public/")
-        maven("https://maven.aliyun.com/nexus/content/repositories/gradle-plugin/")
+        maven("https://maven.aliyun.com/repository/gradle-plugin")
+        maven("https://maven.aliyun.com/repository/public")
     }
 }
 
@@ -12,5 +12,5 @@ plugins {
 
 repositories {
     mavenLocal()
-    maven("https://maven.aliyun.com/nexus/content/groups/public/")
+    maven("https://maven.aliyun.com/repository/public")
 }
