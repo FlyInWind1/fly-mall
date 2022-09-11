@@ -1,0 +1,2 @@
+org.springframework.context.ApplicationContextInitializer=\
+  fly.spring.common.util.SpringUtil
