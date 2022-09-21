@@ -7,7 +7,7 @@ import fly.mall.modules.admin.pojo.vo.LoginInfoVo
 import fly.mall.modules.admin.service.UmsAdminService
 import fly.mall.modules.admin.service.UmsMenuService
 import fly.mall.modules.admin.service.UmsRoleService
-import fly.spring.common.kotlin.extension.rok
+import fly.spring.common.kotlin.extension.mapOk
 import fly.spring.common.pojo.R
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
@@ -26,13 +26,13 @@ class UmsAdminController(
 
     @PostMapping("register")
     fun register(@Validated userDto: UmsAdminDto): Mono<R<UmsAdminPo?>> {
-        return adminService.register(userDto).rok()
+        return adminService.register(userDto).mapOk()
     }
 
     @PostMapping("login")
     fun login(@RequestBody @Validated userDto: UmsAdminDto): Mono<R<Map<String, String>>> {
         val token = adminService.login(userDto.username, userDto.password)
-        return mapOf("token" to token).rok()
+        return mapOf("token" to token).mapOk()
     }
 
     @GetMapping("info")
@@ -45,7 +45,7 @@ class UmsAdminController(
         vo.menus = menuService.listByAdminId(adminId)
         vo.icon = admin.icon
         vo.roles = roleService.listByAdminId(adminId).stream().map { it.name!! }.collect(Collectors.toList())
-        return vo.rok()
+        return vo.mapOk()
     }
 
     @GetMapping("feignTest")

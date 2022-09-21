@@ -1,8 +1,8 @@
 package fly.spring.common.pojo
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import fly.spring.common.constant.CommonConstants
 import java.io.Serializable
-import java.lang.UnsupportedOperationException
 
 /**
  * base response entity
@@ -34,6 +34,11 @@ open class R<T> : Serializable {
             return create(null, null)
         }
 
+        fun <T> okc(): R<T?> {
+            @Suppress("UNCHECKED_CAST")
+            return OK as R<T?>
+        }
+
         fun <T> ok(data: T): R<T> {
             return create(data, null)
         }
@@ -44,6 +49,11 @@ open class R<T> : Serializable {
 
         fun <T> fail(): R<T?> {
             return create(null, CommonConstants.FAIL, null)
+        }
+
+        fun <T> failc(): R<T?> {
+            @Suppress("UNCHECKED_CAST")
+            return FAIL as R<T?>
         }
 
         fun <T> fail(data: T): R<T> {
@@ -64,17 +74,19 @@ open class R<T> : Serializable {
                 set(value) = throw UnsupportedOperationException()
 
             override var msg: String?
+                @JsonIgnore
                 get() = null
                 set(value) = throw UnsupportedOperationException()
 
             override var data: Any?
+                @JsonIgnore
                 get() = null
                 set(value) = throw UnsupportedOperationException()
         }
 
-        val ROK: R<Any> = RC()
+        private val OK = RC()
 
-        val RFAIL: R<Any> = RC(CommonConstants.FAIL)
+        private val FAIL = RC(CommonConstants.FAIL)
 
     }
 }
