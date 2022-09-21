@@ -1,4 +1,0 @@
-[submodule "fly-redis"]
-	path = fly-spring/redis
-	url = git@github.com:FlyInWind1/fly-spring.git
-	branch = spring-redis

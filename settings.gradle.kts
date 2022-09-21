@@ -10,7 +10,7 @@ rootProject.name = "fly-mall"
 
 include("fly-spring:common-core")
 include("fly-spring:common-feign")
-include("fly-spring:redis")
+include("fly-spring:common-redis")
 include("fly-spring:security")
 include("fly-spring:protosuff")
 include("fly-spring:exception")

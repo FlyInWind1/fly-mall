@@ -18,7 +18,7 @@ version = "0.0.1-SNAPSHOT"
 dependencies {
     //fly-spring
     implementation(project(":fly-spring:common-core"))
-    implementation(project(":fly-spring:redis"))
+    implementation(project(":fly-spring:common-redis"))
     implementation(project(":fly-spring:security"))
     implementation(project(":fly-spring:common-feign"))
 
@@ -58,6 +58,7 @@ dependencies {
     implementation("io.projectreactor:reactor-tools")
 
     testImplementation("io.xjar:xjar:4.0.2-SNAPSHOT")
+    testImplementation(kotlin("test"))
 }
 
 tasks.withType<Test> {
