@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.asm.ClassWriter;
 import org.springframework.asm.MethodVisitor;
 import org.springframework.asm.Opcodes;
-import org.springframework.cglib.beans.BeanCopier;
 
 import java.io.File;
 import java.io.IOException;
@@ -58,8 +57,4 @@ public class AsmTest implements Opcodes, Function<Object, String> {
         return s.toString();
     }
 
-    @Test
-    void copierTest() {
-        BeanCopier beanCopier = BeanCopier.create(Enter1.class, Enter2.class, false);
-    }
 }
