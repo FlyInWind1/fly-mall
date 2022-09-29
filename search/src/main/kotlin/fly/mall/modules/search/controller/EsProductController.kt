@@ -15,7 +15,7 @@ class EsProductController(
 
     @GetMapping("importAll")
     fun importAll(): Mono<R<Int>> {
-        return productService.importAll().rok()
+        return productService.importAll().mapOk()
     }
 
     @DeleteMapping("delete/{id}")

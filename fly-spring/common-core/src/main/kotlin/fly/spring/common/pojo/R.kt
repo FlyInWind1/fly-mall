@@ -64,6 +64,7 @@ open class R<T> : Serializable {
             return create(data, CommonConstants.FAIL, msg)
         }
 
+        @Suppress("UNUSED_PARAMETER")
         class RC() : R<Any>() {
             constructor(code: Int?) : this() {
                 super.code = code
