@@ -19,9 +19,12 @@ dependencies {
     api("io.github.microutils:kotlin-logging:${V.kotlinLogging}")
 //    annotationProcessor("org.projectlombok:lombok:${V.lombok}")
 
+    compileOnly("com.baomidou:mybatis-plus-boot-starter:${V.mybatisPlus}")
+
     api("cn.hutool:hutool-core:${V.hutool}")
     api("cn.hutool:hutool-extra:${V.hutool}")
 
+    testImplementation("com.baomidou:mybatis-plus-boot-starter:${V.mybatisPlus}")
     testImplementation(kotlin("test"))
 }
 
