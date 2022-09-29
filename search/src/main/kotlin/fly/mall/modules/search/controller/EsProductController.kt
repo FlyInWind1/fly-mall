@@ -1,7 +1,7 @@
 package fly.mall.modules.search.controller
 
 import fly.mall.modules.search.service.ProductService
-import fly.spring.common.kotlin.extension.rok
+import fly.spring.common.kotlin.extension.mapOk
 import fly.spring.common.pojo.R
 import fly.spring.common.util.MonoR
 import org.springframework.web.bind.annotation.*
