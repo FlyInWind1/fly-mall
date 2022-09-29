@@ -8,6 +8,7 @@ pluginManagement {
 
 rootProject.name = "fly-mall"
 
+include("fly-spring:common-cache")
 include("fly-spring:common-core")
 include("fly-spring:common-feign")
 include("fly-spring:common-redis")
