@@ -14,7 +14,8 @@ spring:
     url: jdbc:postgresql://127.0.0.1:5432/fly_mall
     username: postgres
     password: zdh
-
+  jackson:
+    default-property-inclusion: non_null
 mybatis-plus:
   global-config:
     db-config:
