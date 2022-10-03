@@ -21,8 +21,8 @@ plugins {
 
 allprojects {
     repositories {
-        maven("https://maven.aliyun.com/repository/public")
         mavenLocal()
+        maven("https://maven.aliyun.com/repository/public")
     }
 
     // manage dependencies version by bom

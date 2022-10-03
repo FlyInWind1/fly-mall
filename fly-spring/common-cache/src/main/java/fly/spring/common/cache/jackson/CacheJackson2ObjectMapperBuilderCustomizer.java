@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.pig4cloud.plugin.cache.support.CacheMessage;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.cache.support.NullValue;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +16,8 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(Jackson2ObjectMapperBuilder.class)
-public class NullValueJackson2ObjectMapperBuilderCustomizer implements Jackson2ObjectMapperBuilderCustomizer {
+@ConditionalOnMissingBean(com.pig4cloud.plugin.cache.config.CacheJackson2ObjectMapperBuilderCustomizer.class)
+public class CacheJackson2ObjectMapperBuilderCustomizer implements Jackson2ObjectMapperBuilderCustomizer {
 
     @Override
     public void customize(Jackson2ObjectMapperBuilder builder) {

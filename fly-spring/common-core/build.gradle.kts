@@ -1,4 +1,5 @@
 plugins {
+    `java-test-fixtures`
     kotlin("jvm")
     kotlin("plugin.spring")
     id("io.freefair.lombok") version V.lombokPlugin
@@ -19,7 +20,8 @@ dependencies {
     api("io.github.microutils:kotlin-logging:${V.kotlinLogging}")
 //    annotationProcessor("org.projectlombok:lombok:${V.lombok}")
 
-    compileOnly("com.baomidou:mybatis-plus-boot-starter:${V.mybatisPlus}")
+    // for CacheKeyGeneratorUtil
+    api("com.baomidou:mybatis-plus-boot-starter:${V.mybatisPlus}")
 
     api("cn.hutool:hutool-core:${V.hutool}")
     api("cn.hutool:hutool-extra:${V.hutool}")

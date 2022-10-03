@@ -18,6 +18,7 @@ version = "0.0.1-SNAPSHOT"
 dependencies {
     //fly-spring
     implementation(project(":fly-spring:common-core"))
+    implementation(project(":fly-spring:common-cache"))
     implementation(project(":fly-spring:common-redis"))
     implementation(project(":fly-spring:security"))
     implementation(project(":fly-spring:common-feign"))
@@ -27,7 +28,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-log4j2")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
 
 //    implementation("org.springframework.cloud:spring-cloud-starter-bootstrap")
     // spring cloud alibaba
@@ -57,10 +57,23 @@ dependencies {
 
     implementation("io.projectreactor:reactor-tools")
 
-    testImplementation("io.xjar:xjar:4.0.2-SNAPSHOT")
+    testImplementation(testFixtures(project(":fly-spring:common-core")))
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation(kotlin("test"))
 }
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.test {
+    useJUnitPlatform()
+    jvmArgs(
+        "--add-opens",
+        "java.base/java.util.concurrent=ALL-UNNAMED",
+        "--add-opens",
+        "java.base/java.lang.invoke=ALL-UNNAMED",
+        "--add-opens",
+        "java.base/java.lang=ALL-UNNAMED"
+    )
 }

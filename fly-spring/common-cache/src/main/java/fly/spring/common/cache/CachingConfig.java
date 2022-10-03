@@ -1,16 +1,16 @@
 package fly.spring.common.cache;
 
-import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 
 /**
  * @author FlyInWind
  * @date 2021/12/26
  */
-@AllArgsConstructor
+@EnableCaching
 public class CachingConfig extends CachingConfigurerSupport {
-    private final ParameterKeyGenerator keyGenerator;
+    private final KeyGenerator keyGenerator = new ParameterKeyGenerator();
 
     @Override
     public KeyGenerator keyGenerator() {

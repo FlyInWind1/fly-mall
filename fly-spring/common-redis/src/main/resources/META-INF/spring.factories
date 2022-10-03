@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  fly.spring.common.config.RedisConfiguration
+  fly.spring.common.config.RedisConfiguration,\
+  fly.spring.common.config.RedisCacheAddonConfig

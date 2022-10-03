@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.toolkit.Assert;
 import com.baomidou.mybatisplus.core.toolkit.LambdaUtils;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import fly.spring.common.core.util.ReflectUtil;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.apache.ibatis.reflection.property.PropertyNamer;
 import org.springframework.util.ReflectionUtils;
 
@@ -20,6 +22,13 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * 缓存键生成器跑龙套
+ *
+ * @author FlyInWind
+ * @since 2022/10/03
+ */
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CacheKeyGeneratorUtil {
     public static final String COLON = ":";
     public static final String EQUAL = "=";
@@ -126,9 +135,10 @@ public class CacheKeyGeneratorUtil {
             return params -> {
                 StringJoiner stringJoiner = new StringJoiner(COLON);
                 for (int i = 0; i < count; i++) {
-                    Object value = params[indexSorted[i]];
+                    int ind = indexSorted[i];
+                    Object value = params[ind];
                     if (value != null) {
-                        String name = names[i];
+                        String name = names[ind];
                         stringJoiner.add(name + EQUAL + value);
                     }
                 }
