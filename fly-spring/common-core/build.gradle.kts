@@ -27,6 +27,7 @@ dependencies {
 
     api("cn.hutool:hutool-core:${V.hutool}")
     api("cn.hutool:hutool-extra:${V.hutool}")
+    api("org.apache.commons:commons-lang3")
     api("org.apache.commons:commons-collections4:${V.commonsCollection4}")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")

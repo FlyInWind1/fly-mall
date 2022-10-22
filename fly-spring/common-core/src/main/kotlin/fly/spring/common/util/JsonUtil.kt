@@ -13,7 +13,8 @@ class JsonUtil {
         val OBJECT_MAPPER: ObjectMapper
 
         /** 下划线转驼峰  */
-        val OBJECT_MAPPER_SNAKE_CASE: ObjectMapper
+        @JvmStatic
+        val objectMapperSnakeCase: ObjectMapper
 
         /** 添加@class类型信息  */
         val OBJECT_MAPPER_DEFAULT_TYPING: ObjectMapper
@@ -24,11 +25,11 @@ class JsonUtil {
         init {
             OBJECT_MAPPER = SpringUtil.getBean(JacksonConfiguration.OBJECT_MAPPER)
             val builder = SpringUtil.getBean(Jackson2ObjectMapperBuilder::class.java)
-            OBJECT_MAPPER_SNAKE_CASE = builder.build()
+            objectMapperSnakeCase = builder.build()
             OBJECT_MAPPER_DEFAULT_TYPING = SpringUtil.getBean(JacksonConfiguration.OBJECT_MAPPER_DEFAULT_TYPING)
 
             //不序列化null字段
-            OBJECT_MAPPER_SNAKE_CASE.propertyNamingStrategy = PropertyNamingStrategies.SNAKE_CASE
+            objectMapperSnakeCase.propertyNamingStrategy = PropertyNamingStrategies.SNAKE_CASE
             OBJECT_MAPPER_DEFAULT_TYPING.activateDefaultTyping(
                 OBJECT_MAPPER_DEFAULT_TYPING.polymorphicTypeValidator,
                 ObjectMapper.DefaultTyping.NON_FINAL,

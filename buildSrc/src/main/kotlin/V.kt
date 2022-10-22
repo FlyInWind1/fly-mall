@@ -1,6 +1,8 @@
 object V {
     const val commonsCollection4 = "4.4"
 
+    const val debezium = "1.9.5.Final"
+
     const val dependencyManagement = "1.0.11.RELEASE"
 
     const val hutool = "5.7.16"
