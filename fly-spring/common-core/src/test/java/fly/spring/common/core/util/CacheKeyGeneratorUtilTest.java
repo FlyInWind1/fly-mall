@@ -1,4 +1,4 @@
-package fly.spring.common.cache.util;
+package fly.spring.common.core.util;
 
 import fly.spring.common.bean.TestClass1;
 import fly.spring.common.bean.TestClass2;

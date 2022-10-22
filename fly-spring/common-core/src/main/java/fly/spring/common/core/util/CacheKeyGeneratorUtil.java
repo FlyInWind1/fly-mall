@@ -1,11 +1,8 @@
-package fly.spring.common.cache.util;
+package fly.spring.common.core.util;
 
 import com.baomidou.mybatisplus.core.toolkit.Assert;
 import com.baomidou.mybatisplus.core.toolkit.LambdaUtils;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
-import fly.spring.common.core.util.ReflectUtil;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import org.apache.ibatis.reflection.property.PropertyNamer;
 import org.springframework.util.ReflectionUtils;
 
@@ -22,23 +19,16 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-/**
- * 缓存键生成器跑龙套
- *
- * @author FlyInWind
- * @since 2022/10/03
- */
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CacheKeyGeneratorUtil {
     public static final String COLON = ":";
     public static final String EQUAL = "=";
 
     /**
-     * create a cache key generator
+     * 创建缓存key生成器
      *
      * <pre>{@code
      * Function<Domain, Object> cacheKeyGenerator = CacheKeyGeneratorUtil
-     *      .cacheKeyGenerator(Domain::getProp1, Domain::getProp2);
+     *      .cacheKeyGenerator(Domain::getProp2, Domain::getProp1);
      * Domain domain = new Domain();
      * domain.setProp1("p1");
      * domain.setProp2("p2");
@@ -47,7 +37,7 @@ public class CacheKeyGeneratorUtil {
      * }</pre>
      *
      * @param functions sFunctions
-     * @return {@link Function}<{@link T}, {@link Object}>
+     * @return 缓存key生成器
      */
     @SafeVarargs
     public static <T> Function<T, Object> cacheKeyGenerator(SFunction<T, ?>... functions) {
@@ -80,28 +70,51 @@ public class CacheKeyGeneratorUtil {
             for (int i = 0; i < count; i++) {
                 Function<T, ?> function = functions[i];
                 Object value = function.apply(o);
-                if (value != null) {
-                    String propertyName = names[i];
-                    stringJoiner.add(propertyName + EQUAL + value);
-                }
+                String propertyName = names[i];
+                stringJoiner.add(propertyName + EQUAL + value);
             }
             return stringJoiner.toString();
         };
     }
 
-    @SuppressWarnings("ConfusingArgumentToVarargsMethod")
-    public static Function<Object[], Object> cacheKeyGenerator(Class<?> clazz, String methodName) {
-        Method method = ReflectionUtils.findMethod(clazz, methodName, null);
+    /**
+     * 创建缓存key生成器
+     *
+     * <pre>{@code
+     * static final Function<Object[], Object> GET_DOMAIN_KEY_GENERATOR
+     *      = cacheKeyGenerator(XXX.class, "getDomainKey");
+     *
+     * public static Object getDomainKey(String prop2, String prop1) {
+     *     // new Object[]{prop2, prop1} 顺序需要和参数循序相同
+     *     return GET_DOMAIN_KEY_GENERATOR.apply(new Object[]{prop2, prop1});
+     * }
+     *
+     * public static void main(String[] args) {
+     *     Object cacheKey = getDomainKey("p2", "p1");
+     *     // cacheKey = "prop1=p1:prop2=p2"
+     * }
+     * }</pre>
+     *
+     * @param clazz      方法所在类
+     * @param methodName 方法名
+     * @return 缓存key生成器
+     */
+    public static Function<Object[], Object> cacheKeyGenerator(Class<?> clazz, String methodName, Class<?>... paramTypes) {
+        if (paramTypes.length == 0) {
+            // 无视参数类型搜索方法
+            paramTypes = null;
+        }
+        Method method = ReflectionUtils.findMethod(clazz, methodName, paramTypes);
         return cacheKeyGenerator(Objects.requireNonNull(method));
     }
 
     static final Map<Method, Function<Object[], Object>> METHOD_CACHE_KEY_GENERATOR_CACHE = new ConcurrentHashMap<>();
 
     /**
-     * create a cache key generator
+     * 创建缓存key生成器
      *
      * @param method method
-     * @return {@link Function}<{@link Object[]}, {@link Object}>
+     * @return 缓存key生成器
      * @see #cacheKeyGenerator(Class, String)
      */
     public static Function<Object[], Object> cacheKeyGenerator(Method method) {
@@ -113,7 +126,7 @@ public class CacheKeyGeneratorUtil {
             Parameter[] parameters = m.getParameters();
             String[] names = new String[count];
             for (int i = 0; i < parameters.length; i++) {
-                names[i] = ReflectUtil.getPrameterName(parameters[i]);
+                names[i] = ReflectUtil.resolveParameterName(parameters[i]);
             }
             if (count == 1) {
                 // one parameter
@@ -122,25 +135,23 @@ public class CacheKeyGeneratorUtil {
             }
             // two or more parameter
             // sort by name first
-            Integer[] indexSortedTmp = IntStream.range(0, count)
+            List<Integer> indexSortedTmp = IntStream.range(0, count)
                     .mapToObj(i -> new SimpleEntry<>(names[i], i))
                     .sorted(Entry.comparingByKey())
-                    .peek(entry -> names[entry.getValue()] = entry.getKey())
                     .map(Entry::getValue)
-                    .toArray(Integer[]::new);
+                    .collect(Collectors.toList());
             int[] indexSorted = new int[count];
+            String[] nameSorted = new String[count];
             for (int i = 0; i < count; i++) {
-                indexSorted[i] = indexSortedTmp[i];
+                indexSorted[i] = indexSortedTmp.get(i);
+                nameSorted[i] = names[indexSortedTmp.get(i)];
             }
             return params -> {
                 StringJoiner stringJoiner = new StringJoiner(COLON);
                 for (int i = 0; i < count; i++) {
-                    int ind = indexSorted[i];
-                    Object value = params[ind];
-                    if (value != null) {
-                        String name = names[ind];
-                        stringJoiner.add(name + EQUAL + value);
-                    }
+                    Object value = params[indexSorted[i]];
+                    String name = nameSorted[i];
+                    stringJoiner.add(name + EQUAL + value);
                 }
                 return stringJoiner.toString();
             };

@@ -21,8 +21,8 @@ plugins {
 
 allprojects {
     repositories {
-        mavenLocal()
         maven("https://maven.aliyun.com/repository/public")
+        mavenLocal()
     }
 
     // manage dependencies version by bom
@@ -39,6 +39,11 @@ allprojects {
 
     configurations.all {
         exclude("org.springframework.boot", "spring-boot-starter-logging")
+    }
+
+    tasks.withType<JavaCompile> {
+        sourceCompatibility = "17"
+        targetCompatibility = "17"
     }
 
     tasks.withType<KotlinCompile> {

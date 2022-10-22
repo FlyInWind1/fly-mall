@@ -1,4 +1,4 @@
-package fly.spring.common.cglib;
+package fly.spring.common.core.cglib;
 
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.ReflectUtil;

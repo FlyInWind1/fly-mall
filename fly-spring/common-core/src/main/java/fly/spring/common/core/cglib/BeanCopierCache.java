@@ -1,4 +1,4 @@
-package fly.spring.common.cglib;
+package fly.spring.common.core.cglib;
 
 import cn.hutool.core.lang.SimpleCache;
 import cn.hutool.core.util.StrUtil;
@@ -30,7 +30,7 @@ public enum BeanCopierCache {
      */
     public BeanCopier get(Class<?> srcClass, Class<?> targetClass, Converter converter) {
         final String key = genKey(srcClass, targetClass, converter);
-        return cache.get(key, () -> BeanCopier.create(srcClass, targetClass, converter != null));
+        return cache.get(key, () -> BeanCopierUtil.create(srcClass, targetClass, converter != null));
     }
 
     /**

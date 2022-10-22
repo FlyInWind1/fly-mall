@@ -3,7 +3,7 @@ package fly.spring.common.cache
 import com.pig4cloud.plugin.cache.support.RedisCaffeineCache
 import fly.mall.AdminApplication
 import fly.spring.common.bean.TestClass2
-import fly.spring.common.cache.util.CacheKeyGeneratorUtil
+import fly.spring.common.core.util.CacheKeyGeneratorUtil
 import org.apache.ibatis.annotations.Param
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test

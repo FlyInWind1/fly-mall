@@ -1,2 +1,6 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  fly.spring.common.cache.CachingConfig
+  fly.spring.common.cache.ParameterKeyGenerator,\
+  fly.spring.common.cache.CachingConfig,\
+  com.pig4cloud.plugin.cache.config.CacheJackson2ObjectMapperBuilderCustomizer,\
+  com.pig4cloud.plugin.cache.metrics.RedisCaffeineCacheMeterConfiguration,\
+  com.pig4cloud.plugin.cache.MultilevelCacheAutoConfiguration

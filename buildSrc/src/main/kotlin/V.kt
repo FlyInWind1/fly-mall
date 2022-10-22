@@ -19,7 +19,6 @@ object V {
 
     const val mapstruct = "1.4.2.Final"
     const val mariaJdbc = "2.6.1"
-    const val multiLevelCache = "0.0.8"
     const val mybatisPlus = "3.4.3.1"
 
     const val kotlin = "1.7.10"

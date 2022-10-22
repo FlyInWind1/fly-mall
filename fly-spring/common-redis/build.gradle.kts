@@ -1,7 +1,8 @@
 plugins {
     `maven-publish`
-
     kotlin("jvm")
+
+    id("io.spring.dependency-management")
     kotlin("plugin.spring")
 }
 
@@ -10,8 +11,8 @@ version = "0.0.1"
 
 dependencies {
     api(project(":fly-spring:common-core"))
-    api("org.springframework.boot:spring-boot-starter-data-redis-reactive:${V.springBoot}")
-    api("org.springframework.boot:spring-boot-starter-json:${V.springBoot}")
+    api("org.springframework.boot:spring-boot-starter-data-redis-reactive")
+    api("org.springframework.boot:spring-boot-starter-json")
 }
 
 java {

@@ -1,6 +1,6 @@
 package fly.spring.common.cache;
 
-import fly.spring.common.cache.util.CacheKeyGeneratorUtil;
+import fly.spring.common.core.util.CacheKeyGeneratorUtil;
 import org.springframework.lang.NonNull;
 
 import java.lang.reflect.Method;
@@ -12,6 +12,7 @@ import java.lang.reflect.Method;
  * @date 2021/12/26
  */
 public class ParameterKeyGenerator implements org.springframework.cache.interceptor.KeyGenerator {
+
     /**
      * @param target 目标
      * @param method 方法

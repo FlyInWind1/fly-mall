@@ -1,8 +1,10 @@
 plugins {
     `java-test-fixtures`
     kotlin("jvm")
-    kotlin("plugin.spring")
     id("io.freefair.lombok") version V.lombokPlugin
+
+    id("io.spring.dependency-management")
+    kotlin("plugin.spring")
 }
 
 group = "flyinwind"
@@ -12,8 +14,8 @@ dependencies {
     //kotlin
     api(kotlin("reflect"))
 
-    api("org.springframework.boot:spring-boot-starter-webflux:${V.springBoot}")
-    api("org.springframework.boot:spring-boot-starter-log4j2:${V.springBoot}")
+    api("org.springframework.boot:spring-boot-starter-webflux")
+    api("org.springframework.boot:spring-boot-starter-log4j2")
 
 //    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions:${V.reactorKotlinExtensions}")
 
@@ -25,7 +27,9 @@ dependencies {
 
     api("cn.hutool:hutool-core:${V.hutool}")
     api("cn.hutool:hutool-extra:${V.hutool}")
+    api("org.apache.commons:commons-collections4:${V.commonsCollection4}")
 
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("com.baomidou:mybatis-plus-boot-starter:${V.mybatisPlus}")
     testImplementation(kotlin("test"))
 }
