@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "flyinwind"
-version = "0.0.1"
+version = "0.0.1-SNAPSHOT"
 
 dependencies {
     implementation(project(":fly-spring:common-core"))
