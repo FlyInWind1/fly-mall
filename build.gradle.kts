@@ -1,4 +1,5 @@
 import io.spring.gradle.dependencymanagement.DependencyManagementPlugin
+import org.jetbrains.kotlin.gradle.internal.Kapt3GradleSubplugin
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
@@ -11,6 +12,7 @@ buildscript {
 
 plugins {
     kotlin("jvm") version V.kotlin
+    kotlin("plugin.lombok") version V.kotlin
     kotlin("plugin.spring") version V.kotlin
     kotlin("kapt") version V.kotlin
     id("io.freefair.lombok") version V.lombokPlugin
@@ -35,6 +37,20 @@ allprojects {
                     mavenBom("org.springframework.cloud:spring-cloud-dependencies:${V.springCloudDependencies}")
                 }
             }
+        }
+    }
+
+    if (plugins.hasPlugin(org.jetbrains.kotlin.lombok.gradle.LombokSubplugin::class)) {
+        kotlinLombok {
+            // https://kotlinlang.org/docs/lombok.html#using-the-lombok-configuration-file
+            lombokConfigurationFile(file("lombok.config"))
+        }
+    }
+
+    if (plugins.hasPlugin(Kapt3GradleSubplugin::class)) {
+        kapt {
+            // https://kotlinlang.org/docs/lombok.html#using-with-kapt
+            keepJavacAnnotationProcessors = true
         }
     }
 
