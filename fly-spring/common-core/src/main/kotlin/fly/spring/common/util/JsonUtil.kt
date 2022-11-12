@@ -1,45 +1,53 @@
 package fly.spring.common.util
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo
+import cn.hutool.extra.spring.SpringUtil
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.core.type.TypeReference
-import com.fasterxml.jackson.databind.*
+import com.fasterxml.jackson.databind.JavaType
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.ObjectWriter
 import fly.spring.common.config.JacksonConfiguration
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder
 
 
 class JsonUtil {
     companion object {
-        val OBJECT_MAPPER: ObjectMapper
+        @JvmStatic
+        val objectMapper: ObjectMapper
 
         /** 下划线转驼峰  */
         @JvmStatic
         val objectMapperSnakeCase: ObjectMapper
 
         /** 添加@class类型信息  */
-        val OBJECT_MAPPER_DEFAULT_TYPING: ObjectMapper
+        @JvmStatic
+        val objectMapperDefaultTyping: ObjectMapper
 
         /** 以美观的方式打印  */
-        val OBJECT_WRITER_PRETTY: ObjectWriter
+        @JvmStatic
+        val objectWriterPretty: ObjectWriter
 
         init {
-            OBJECT_MAPPER = SpringUtil.getBean(JacksonConfiguration.OBJECT_MAPPER)
-            val builder = SpringUtil.getBean(Jackson2ObjectMapperBuilder::class.java)
-            objectMapperSnakeCase = builder.build()
-            OBJECT_MAPPER_DEFAULT_TYPING = SpringUtil.getBean(JacksonConfiguration.OBJECT_MAPPER_DEFAULT_TYPING)
-
-            //不序列化null字段
-            objectMapperSnakeCase.propertyNamingStrategy = PropertyNamingStrategies.SNAKE_CASE
-            OBJECT_MAPPER_DEFAULT_TYPING.activateDefaultTyping(
-                OBJECT_MAPPER_DEFAULT_TYPING.polymorphicTypeValidator,
-                ObjectMapper.DefaultTyping.NON_FINAL,
-                JsonTypeInfo.As.PROPERTY
-            )
-            OBJECT_WRITER_PRETTY = OBJECT_MAPPER.writerWithDefaultPrettyPrinter()
+            if (SpringUtil.getBeanFactory() != null) {
+                objectMapper = SpringUtil.getBean(JacksonConfiguration.OBJECT_MAPPER)
+                objectMapperSnakeCase = SpringUtil.getBean(JacksonConfiguration.OBJECT_MAPPER_SNAKE_CASE)
+                objectMapperDefaultTyping = SpringUtil.getBean(JacksonConfiguration.OBJECT_MAPPER_DEFAULT_TYPING)
+                objectWriterPretty = SpringUtil.getBean(JacksonConfiguration.OBJECT_WRITER_PRETTY)
+            } else {
+                // 非spring环境
+                val configuration = JacksonConfiguration()
+                val builder = Jackson2ObjectMapperBuilder()
+                objectMapper = configuration.objectMapper(builder)
+                objectMapperSnakeCase = configuration.objectMapperSnakeCase(builder)
+                objectMapperDefaultTyping = configuration.objectMapperDefaultTyping(builder)
+                objectWriterPretty = configuration.objectWriterPretty(objectMapper)
+            }
         }
 
+        @JvmStatic
         fun writeValueAsString(o: Any): String {
-            return OBJECT_MAPPER.writeValueAsString(o)
+            return objectMapper.writeValueAsString(o)
         }
 
         /**
@@ -49,32 +57,39 @@ class JsonUtil {
          * @return [String]
          * @throws JsonProcessingException json处理异常
          */
+        @JvmStatic
         fun writeValueAsStringPretty(o: Any): String {
-            return OBJECT_WRITER_PRETTY.writeValueAsString(o)
+            return objectWriterPretty.writeValueAsString(o)
         }
 
+        @JvmStatic
         fun readTree(content: String): JsonNode {
-            return OBJECT_MAPPER.readTree(content)
+            return objectMapper.readTree(content)
         }
 
+        @JvmStatic
         fun <T> readTree(jsonNode: JsonNode, clazz: Class<T>): T {
-            return OBJECT_MAPPER.treeToValue(jsonNode, clazz)
+            return objectMapper.treeToValue(jsonNode, clazz)
         }
 
+        @JvmStatic
         fun <T> readValue(content: String, clazz: Class<T>): T {
-            return OBJECT_MAPPER.readValue(content, clazz)
+            return objectMapper.readValue(content, clazz)
         }
 
+        @JvmStatic
         fun <T> readValue(content: String, typeReference: TypeReference<T>): T {
-            return OBJECT_MAPPER.readValue(content, typeReference)
+            return objectMapper.readValue(content, typeReference)
         }
 
+        @JvmStatic
         fun <T> readValue(content: String, javaType: JavaType): T {
-            return OBJECT_MAPPER.readValue(content, javaType)
+            return objectMapper.readValue(content, javaType)
         }
 
+        @JvmStatic
         fun constructType(typeReference: TypeReference<*>): JavaType {
-            return OBJECT_MAPPER.typeFactory.constructType(typeReference)
+            return objectMapper.typeFactory.constructType(typeReference)
         }
 
     }
