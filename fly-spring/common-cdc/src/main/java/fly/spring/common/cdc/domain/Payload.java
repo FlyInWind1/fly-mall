@@ -80,7 +80,7 @@ public class Payload<T> implements Iterable<T> {
      * @param <T>      T
      * @return {@link Iterable}<{@link T}>
      */
-    public static <T> Iterable<T> nonNullIterable(Iterable<Payload<T>> payloads) {
+    public static <T> Iterable<T> iterableNonNull(Iterable<Payload<T>> payloads) {
         Iterable<T> iterable = IterableUtil.chainedIterable(payloads);
         return IterableUtils.filteredIterable(iterable, Objects::nonNull);
     }

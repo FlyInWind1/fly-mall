@@ -176,13 +176,18 @@ public abstract class AbstractEmbeddedDebeziumChangeListener<T> extends TypeRefe
         // 通过类名设置 slot.name
         String slotName = properties.getSlotName();
         if (Strings.isNullOrEmpty(slotName)) {
+            slotName = debeziumProperties.getProperty("slot.name");
+        }
+        if (Strings.isNullOrEmpty(slotName)) {
             String className = getClass().getSimpleName();
             className = StringUtil.camelToUnderline(className);
             slotName = className + "_slot";
             log.warn("没有配置 slotName，将使用由类型转下划线而成的 {} 作为 slotName", slotName);
         }
         debeziumProperties.setProperty("slot.name", slotName);
-        debeziumProperties.setProperty("database.server.name", slotName);
+        debeziumProperties.putIfAbsent("database.server.name", slotName);
+        debeziumProperties.putIfAbsent("name", slotName);
+        debeziumProperties.putIfAbsent("topic.prefix", slotName);
 
         // 配置默认的 FileOffsetBackingStore
         String dataDir = "./debezium/" + slotName;
@@ -192,7 +197,9 @@ public abstract class AbstractEmbeddedDebeziumChangeListener<T> extends TypeRefe
             debeziumProperties.setProperty("offset.storage", "org.apache.kafka.connect.storage.FileOffsetBackingStore");
             String fileName = dataDir + "/offsets.dat";
             debeziumProperties.putIfAbsent("offset.storage.file.filename", fileName);
-            Files.createDirectories(dataDirPath);
+        }
+        if (!Strings.isNullOrEmpty(debeziumProperties.getProperty("offset.storage.file.filename"))) {
+            Files.createDirectories(Paths.get(debeziumProperties.getProperty("offset.storage.file.filename")).getParent());
         }
         // 配置默认的FileDatabaseHistory
         String databaseHistory = debeziumProperties.getProperty("database.history");
@@ -201,6 +208,9 @@ public abstract class AbstractEmbeddedDebeziumChangeListener<T> extends TypeRefe
             String fileName = dataDir + "/dbhistory.dat";
             debeziumProperties.putIfAbsent("database.history.file.filename", fileName);
             Files.createDirectories(dataDirPath);
+        }
+        if (!Strings.isNullOrEmpty(debeziumProperties.getProperty("database.history.file.filename"))) {
+            Files.createDirectories(Paths.get(debeziumProperties.getProperty("database.history.file.filename")).getParent());
         }
     }
 

@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  fly.spring.common.cdc.spring.ChangeListenerKeepAliveScheduledTask
+  fly.spring.common.cdc.spring.ChangeListenerKeepAliveScheduledTask,\
+  com.jiyang.common.cdc.spring.controller.ChangeListenerController

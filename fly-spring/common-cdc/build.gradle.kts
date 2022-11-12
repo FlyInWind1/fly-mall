@@ -18,6 +18,9 @@ dependencies {
     compileOnly("com.baomidou:mybatis-plus-extension:${V.mybatisPlus}")
 
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
+    testImplementation(kotlin("test"))
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
 tasks.test {
