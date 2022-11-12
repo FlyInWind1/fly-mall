@@ -15,6 +15,7 @@ open class R<T> : Serializable {
     companion object {
         private const val serialVersionUID = 1L
 
+        @JvmStatic
         fun <T> create(data: T, msg: String?): R<T> {
             return R<T>().apply {
                 this.msg = msg
@@ -22,6 +23,7 @@ open class R<T> : Serializable {
             }
         }
 
+        @JvmStatic
         fun <T> create(data: T, code: Int?, msg: String?): R<T> {
             return R<T>().apply {
                 this.code = code
@@ -30,36 +32,44 @@ open class R<T> : Serializable {
             }
         }
 
+        @JvmStatic
         fun <T> ok(): R<T?> {
             return create(null, null)
         }
 
+        @JvmStatic
         fun <T> okc(): R<T?> {
             @Suppress("UNCHECKED_CAST")
             return OK as R<T?>
         }
 
+        @JvmStatic
         fun <T> ok(data: T): R<T> {
             return create(data, null)
         }
 
+        @JvmStatic
         fun <T> ok(data: T, msg: String): R<T> {
             return create(data, msg)
         }
 
+        @JvmStatic
         fun <T> fail(): R<T?> {
             return create(null, CommonConstants.FAIL, null)
         }
 
+        @JvmStatic
         fun <T> failc(): R<T?> {
             @Suppress("UNCHECKED_CAST")
             return FAIL as R<T?>
         }
 
+        @JvmStatic
         fun <T> fail(data: T): R<T> {
             return create(data, CommonConstants.FAIL, null)
         }
 
+        @JvmStatic
         fun <T> fail(data: T, msg: String): R<T> {
             return create(data, CommonConstants.FAIL, msg)
         }
