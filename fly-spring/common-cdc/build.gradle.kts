@@ -13,6 +13,7 @@ dependencies {
 
     api("io.debezium:debezium-embedded:${V.debezium}")
     api("io.debezium:debezium-connector-postgres:${V.debezium}")
+    api("io.debezium:debezium-storage-redis:2.1.0.Alpha1")
     api("org.springframework.boot:spring-boot-starter")
 
     compileOnly("com.baomidou:mybatis-plus-extension:${V.mybatisPlus}")

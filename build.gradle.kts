@@ -26,6 +26,7 @@ allprojects {
     repositories {
         maven("https://maven.aliyun.com/repository/public")
         mavenLocal()
+        mavenCentral()
     }
 
     // manage dependencies version by bom

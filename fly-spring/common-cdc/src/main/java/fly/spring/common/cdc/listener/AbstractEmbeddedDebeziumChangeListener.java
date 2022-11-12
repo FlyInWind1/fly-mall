@@ -33,6 +33,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static org.apache.kafka.connect.runtime.standalone.StandaloneConfig.OFFSET_STORAGE_FILE_FILENAME_CONFIG;
@@ -214,6 +215,31 @@ public abstract class AbstractEmbeddedDebeziumChangeListener<T> extends TypeRefe
     }
 
     //---------- debeziumProperties 配置相关
+
+    /**
+     * 配置 {@link #debeziumProperties}。当 {@link #debeziumProperties} 中 key 的值不存在或为空，参数 value 不是空时才配置
+     *
+     * @param key   key
+     * @param value value
+     */
+    public void setDebeziumPropIfNecessary(String key, String value) {
+        setDebeziumPropIfNecessary(key, () -> value);
+    }
+
+    /**
+     * 配置 {@link #debeziumProperties}。当 {@link #debeziumProperties} 中 key 的值不存在或为空，参数 value 不是空时才配置
+     *
+     * @param key      key
+     * @param supplier 返回 value
+     */
+    public void setDebeziumPropIfNecessary(String key, Supplier<String> supplier) {
+        if (Strings.isNullOrEmpty(debeziumProperties.getProperty(key))) {
+            String value = supplier.get();
+            if (!Strings.isNullOrEmpty(value)) {
+                debeziumProperties.setProperty(key, value);
+            }
+        }
+    }
 
     protected String createTableIncludeList() {
         return tableNameTypeMetaMap.keySet().stream()
