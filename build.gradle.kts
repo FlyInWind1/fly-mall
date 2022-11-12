@@ -13,6 +13,7 @@ plugins {
     kotlin("jvm") version V.kotlin
     kotlin("plugin.spring") version V.kotlin
     kotlin("kapt") version V.kotlin
+    id("io.freefair.lombok") version V.lombokPlugin
 
     id("io.spring.dependency-management") version V.dependencyManagement
     // not apply in root project otherwise it will error can not find spring main class when :build

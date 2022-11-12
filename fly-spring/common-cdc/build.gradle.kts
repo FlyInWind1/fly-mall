@@ -1,6 +1,6 @@
 plugins {
     kotlin("jvm")
-    id("io.freefair.lombok") version V.lombokPlugin
+    id("io.freefair.lombok")
 
     id("io.spring.dependency-management")
 }
