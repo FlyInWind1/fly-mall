@@ -35,6 +35,8 @@ import java.util.concurrent.ThreadFactory;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static org.apache.kafka.connect.runtime.standalone.StandaloneConfig.OFFSET_STORAGE_FILE_FILENAME_CONFIG;
+
 /**
  * 基于嵌入式 debezium 的表变化监听器
  *
@@ -187,17 +189,22 @@ public abstract class AbstractEmbeddedDebeziumChangeListener<T> extends TypeRefe
         debeziumProperties.putIfAbsent("database.server.name", slotName);
         debeziumProperties.putIfAbsent("name", slotName);
         debeziumProperties.putIfAbsent("topic.prefix", slotName);
+    }
 
-        // 配置默认的 FileOffsetBackingStore
-        String dataDir = "./debezium/" + slotName;
-        String offsetStorage = debeziumProperties.getProperty("offset.storage");
-        if (Strings.isNullOrEmpty(offsetStorage)) {
+    /**
+     * 配置 {@link org.apache.kafka.connect.storage.FileOffsetBackingStore}
+     */
+    @SneakyThrows(IOException.class)
+    protected void configStorage() {
+        if (Strings.isNullOrEmpty(debeziumProperties.getProperty("offset.storage"))) {
+            String slotName = debeziumProperties.getProperty("slot.name");
+            String dataDir = "./debezium/" + slotName;
             debeziumProperties.setProperty("offset.storage", "org.apache.kafka.connect.storage.FileOffsetBackingStore");
             String fileName = dataDir + "/offsets.dat";
-            debeziumProperties.putIfAbsent("offset.storage.file.filename", fileName);
+            debeziumProperties.putIfAbsent(OFFSET_STORAGE_FILE_FILENAME_CONFIG, fileName);
         }
-        if (!Strings.isNullOrEmpty(debeziumProperties.getProperty("offset.storage.file.filename"))) {
-            Files.createDirectories(Paths.get(debeziumProperties.getProperty("offset.storage.file.filename")).getParent());
+        if (!Strings.isNullOrEmpty(debeziumProperties.getProperty(OFFSET_STORAGE_FILE_FILENAME_CONFIG))) {
+            Files.createDirectories(Paths.get(debeziumProperties.getProperty(OFFSET_STORAGE_FILE_FILENAME_CONFIG)).getParent());
         }
     }
 
@@ -277,6 +284,7 @@ public abstract class AbstractEmbeddedDebeziumChangeListener<T> extends TypeRefe
                 if (debeziumEngine != null) {
                     return;
                 }
+                configStorage();
                 // 创建 debezium engine
                 debeziumEngine = DebeziumEngine.create(Json.class)
                         .using(debeziumProperties)
