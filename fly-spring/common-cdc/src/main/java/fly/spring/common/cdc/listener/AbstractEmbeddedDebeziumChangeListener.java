@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
 import java.io.Closeable;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
@@ -191,7 +190,6 @@ public abstract class AbstractEmbeddedDebeziumChangeListener<T> extends TypeRefe
 
         // 配置默认的 FileOffsetBackingStore
         String dataDir = "./debezium/" + slotName;
-        Path dataDirPath = Paths.get(dataDir);
         String offsetStorage = debeziumProperties.getProperty("offset.storage");
         if (Strings.isNullOrEmpty(offsetStorage)) {
             debeziumProperties.setProperty("offset.storage", "org.apache.kafka.connect.storage.FileOffsetBackingStore");
@@ -200,17 +198,6 @@ public abstract class AbstractEmbeddedDebeziumChangeListener<T> extends TypeRefe
         }
         if (!Strings.isNullOrEmpty(debeziumProperties.getProperty("offset.storage.file.filename"))) {
             Files.createDirectories(Paths.get(debeziumProperties.getProperty("offset.storage.file.filename")).getParent());
-        }
-        // 配置默认的FileDatabaseHistory
-        String databaseHistory = debeziumProperties.getProperty("database.history");
-        if (Strings.isNullOrEmpty(databaseHistory)) {
-            debeziumProperties.setProperty("database.history", "io.debezium.relational.history.FileDatabaseHistory");
-            String fileName = dataDir + "/dbhistory.dat";
-            debeziumProperties.putIfAbsent("database.history.file.filename", fileName);
-            Files.createDirectories(dataDirPath);
-        }
-        if (!Strings.isNullOrEmpty(debeziumProperties.getProperty("database.history.file.filename"))) {
-            Files.createDirectories(Paths.get(debeziumProperties.getProperty("database.history.file.filename")).getParent());
         }
     }
 
