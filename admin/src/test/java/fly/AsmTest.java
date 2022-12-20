@@ -1,6 +1,6 @@
 package fly;
 
-import org.apache.commons.io.FileUtils;
+import cn.hutool.core.io.FileUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.asm.ClassWriter;
 import org.springframework.asm.MethodVisitor;
@@ -30,7 +30,7 @@ public class AsmTest implements Opcodes, Function<Object, String> {
         methodVisitor.visitMaxs(1, 2);
         methodVisitor.visitEnd();
         classWriter.visitEnd();
-        FileUtils.writeByteArrayToFile(new File("build/TestClass.class"), classWriter.toByteArray());
+        FileUtil.writeBytes(classWriter.toByteArray(), new File("build/TestClass.class"));
         InnerClassLoader classLoader = new InnerClassLoader();
         String className = "fly.TestClass";
         classLoader.defineClass(className, classWriter.toByteArray());

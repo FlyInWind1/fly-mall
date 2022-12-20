@@ -57,6 +57,8 @@ dependencies {
 
     implementation("io.projectreactor:reactor-tools")
 
+    implementation("net.bytebuddy:byte-buddy-dep:${V.byteBuddy}")
+
     testImplementation(testFixtures(project(":fly-spring:common-core")))
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation(kotlin("test"))

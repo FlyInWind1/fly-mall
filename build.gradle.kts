@@ -59,6 +59,14 @@ allprojects {
         exclude("org.springframework.boot", "spring-boot-starter-logging")
     }
 
+    dependencies {
+        modules {
+            module("net.bytebuddy:byte-buddy") {
+                replacedBy("net.bytebuddy:byte-buddy-dep")
+            }
+        }
+    }
+
     tasks.withType<JavaCompile> {
         sourceCompatibility = "17"
         targetCompatibility = "17"

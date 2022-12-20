@@ -1,9 +1,11 @@
 object V {
     const val commonsCollection4 = "4.4"
 
+    const val byteBuddy = "1.12.19"
+
     const val debezium = "2.0.0.Final"
 
-    const val dependencyManagement = "1.0.11.RELEASE"
+    const val dependencyManagement = "1.1.0"
 
     const val guava = "31.1-jre"
 
@@ -23,7 +25,7 @@ object V {
 
     const val mapstruct = "1.4.2.Final"
     const val mariaJdbc = "2.6.1"
-    const val mybatisPlus = "3.4.3.1"
+    const val mybatisPlus = "3.5.2"
 
     const val kotlin = "1.7.10"
     const val kotlinLogging = "2.1.21"
