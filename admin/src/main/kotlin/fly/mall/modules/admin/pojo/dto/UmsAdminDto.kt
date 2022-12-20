@@ -1,6 +1,6 @@
 package fly.mall.modules.admin.pojo.dto
 
-import javax.validation.constraints.NotBlank
+import jakarta.validation.constraints.NotBlank
 
 class UmsAdminDto {
 

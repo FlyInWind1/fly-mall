@@ -32,10 +32,10 @@ class JwtUtil {
      */
     fun generate(claims: Map<String, Any>): String {
         return Jwts.builder()
-                .setClaims(claims)
-                .setExpiration(Date(System.currentTimeMillis() + expiration * 1000))
-                .signWith(key)
-                .compact()
+            .setClaims(claims)
+            .setExpiration(Date(System.currentTimeMillis() + expiration * 1000))
+            .signWith(key)
+            .compact()
     }
 
     /**
@@ -44,11 +44,11 @@ class JwtUtil {
     fun getClaims(jws: String): Claims {
         try {
             return Jwts
-                    .parserBuilder()
-                    .setSigningKey(key)
-                    .build()
-                    .parseClaimsJws(jws)
-                    .body
+                .parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(jws)
+                .body
         } catch (e: Exception) {
             log.info("Jwt auth failed:{}", jws)
             throw GeneralException("auth failed")
@@ -78,10 +78,12 @@ class JwtUtil {
     }
 
     fun generate(userDetails: UserDetails): String {
-        return this.generate(mapOf(
+        return this.generate(
+            mapOf(
                 "sub" to userDetails.username,
                 "created" to Date()
-        ))
+            )
+        )
     }
 
     fun refreshHead(oldJws: String): String {

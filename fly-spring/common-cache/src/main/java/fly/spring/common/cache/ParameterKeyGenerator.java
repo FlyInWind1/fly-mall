@@ -2,6 +2,7 @@ package fly.spring.common.cache;
 
 import fly.spring.common.core.util.CacheKeyGeneratorUtil;
 import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 
@@ -11,6 +12,7 @@ import java.lang.reflect.Method;
  * @author FlyInWind
  * @date 2021/12/26
  */
+@Component
 public class ParameterKeyGenerator implements org.springframework.cache.interceptor.KeyGenerator {
 
     /**

@@ -1,9 +1,11 @@
 object V {
     const val commonsCollection4 = "4.4"
 
-    const val debezium = "1.9.5.Final"
+    const val debezium = "2.0.0.Final"
 
     const val dependencyManagement = "1.0.11.RELEASE"
+
+    const val guava = "31.1-jre"
 
     const val hutool = "5.7.16"
 
@@ -13,9 +15,9 @@ object V {
 
     const val reactorKotlinExtensions = "1.0.2.RELEASE"
 
-    const val springBoot = "2.7.2"
-    const val springCloud = "3.0.3"
-    const val springCloudDependencies = "2021.0.3"
+    const val springBoot = "3.0.0"
+    const val springCloud = "3.1.5"
+    const val springCloudDependencies = "2021.0.5"
     const val springCloudAlibaba = "2021.1"
 //    const val springDoc = "1.4.1"
 

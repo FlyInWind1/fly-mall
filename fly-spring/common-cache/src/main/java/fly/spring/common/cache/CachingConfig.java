@@ -8,7 +8,7 @@ import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -20,7 +20,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 @AutoConfiguration
 @AllArgsConstructor
 @EnableConfigurationProperties(CacheConfigProperties.class)
-public class CachingConfig extends CachingConfigurerSupport {
+public class CachingConfig implements CachingConfigurer {
     private final ParameterKeyGenerator keyGenerator;
 
     @Override

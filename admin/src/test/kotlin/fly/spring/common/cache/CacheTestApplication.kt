@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.cache.Cache
 import org.springframework.cache.CacheManager
-import javax.annotation.Resource
+import jakarta.annotation.Resource
 import kotlin.test.assertNull
 
 @SpringBootTest(classes = [AdminApplication::class])
