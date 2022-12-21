@@ -28,5 +28,5 @@ object V {
     const val mybatisPlus = "3.5.2"
 
     const val kotlin = "1.7.10"
-    const val kotlinLogging = "2.1.21"
+    const val kotlinLogging = "3.0.4"
 }

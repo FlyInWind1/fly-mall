@@ -5,26 +5,36 @@ import fly.spring.security.component.JwtAuthenticationTokenFilter
 import fly.spring.security.component.JwtProperties
 import fly.spring.security.component.RestAccessDeniedHandler
 import fly.spring.security.util.JwtUtil
+import org.springframework.beans.factory.BeanFactory
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.http.HttpMethod
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.ReactiveAuthenticationManager
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder
 import org.springframework.security.config.web.server.ServerHttpSecurity
+import org.springframework.security.config.web.server.invoke
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.server.SecurityWebFilterChain
+import org.springframework.security.web.server.authentication.AuthenticationWebFilter
 
 /**
  * Security config
  *
  * @constructor Create empty Security config
  */
-@Suppress("SpringJavaInjectionPointsAutowiringInspection")
 @EnableWebFluxSecurity
 @EnableConfigurationProperties(JwtProperties::class)
-class SecurityConfig {
+class SecurityConfig(
+    val beanFactory: BeanFactory
+) {
+    companion object{
+        const val loginAuthenticationManager = "loginAuthenticationManager"
+    }
+
     /**
      * Security filter chain
      *
@@ -32,44 +42,58 @@ class SecurityConfig {
      * @return
      */
     @Bean
-    fun securityFilterChain(http: ServerHttpSecurity,
-                            objectMapper: ObjectMapper,
-                            jwtUtil: JwtUtil,
-                            userDetailsService: UserDetailsService,
-                            jwtProperties: JwtProperties
+    fun securityFilterChain(
+        http: ServerHttpSecurity,
+        objectMapper: ObjectMapper,
+        jwtUtil: JwtUtil,
+        userDetailsService: UserDetailsService,
+        jwtProperties: JwtProperties,
+        authenticationManager: ReactiveAuthenticationManager
     ): SecurityWebFilterChain {
+        return http {
+            csrf {
+                disable()
+            }
+            authorizeExchange {
+                authorize("/captchaImage", permitAll)
+                authorize(anyExchange, authenticated)
+            }
+        }
+
         return http
-                .csrf {
-                    //disable csrf for jwt
-                    it.disable()
-                }
-                .headers {
-                    //disable cache
-                    it.cache()
-                }
-                .authorizeExchange {
-                    it.pathMatchers("/login")
-                            .permitAll()
+            .csrf {
+                it.disable()
+            }
+            .headers {
+                //disable cache
+                it.cache()
+            }
+            .authorizeExchange {
+                it.pathMatchers("/login")
+                    .permitAll()
 
-                            .pathMatchers(HttpMethod.GET, "/static")
-                            .permitAll()
+                    .pathMatchers(HttpMethod.GET, "/static")
+                    .permitAll()
 
-                            .pathMatchers(HttpMethod.OPTIONS)
-                            .permitAll()
+                    .pathMatchers(HttpMethod.OPTIONS)
+                    .permitAll()
 
-                            .anyExchange()
+                    .anyExchange()
 //                            .authenticated()
-                            .permitAll()
-                }
-                .formLogin {
-                    it.loginPage("/login")
-                }
-                .addFilterBefore(JwtAuthenticationTokenFilter(jwtUtil, userDetailsService, jwtProperties), SecurityWebFiltersOrder.AUTHENTICATION)
-                .exceptionHandling {
-                    it.accessDeniedHandler(RestAccessDeniedHandler(objectMapper))
+                    .permitAll()
+            }
+            .formLogin {
+                it.loginPage("/login")
+            }
+            .addFilterBefore(
+                JwtAuthenticationTokenFilter(jwtUtil, userDetailsService, jwtProperties),
+                SecurityWebFiltersOrder.AUTHENTICATION
+            )
+            .exceptionHandling {
+                it.accessDeniedHandler(RestAccessDeniedHandler(objectMapper))
 //                            .authenticationEntryPoint()
-                }
-                .build()
+            }
+            .build()
 
 
 //                .authorizeExchange {
@@ -87,7 +111,7 @@ class SecurityConfig {
 //                loginPage = "/log-in"
 //            }
 //        }
-    }
+    }*/
 
     @Bean
     fun passwordEncoder(): PasswordEncoder {
@@ -125,4 +149,9 @@ class SecurityConfig {
 //
 //        }
 //    }
+
+    @Bean(loginAuthenticationManager)
+    fun loginAuthenticationManager(authenticationManager: ReactiveAuthenticationManager): AuthenticationManager {
+        val authenticationWebFilter = AuthenticationWebFilter(authenticationManager)
+    }
 }
