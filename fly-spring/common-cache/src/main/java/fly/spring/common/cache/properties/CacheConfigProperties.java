@@ -3,8 +3,12 @@ package fly.spring.common.cache.properties;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
 
 @Data
+@Primary
+@Component
 @ConfigurationProperties(prefix = "spring.cache.multi")
 public class CacheConfigProperties extends com.pig4cloud.plugin.cache.properties.CacheConfigProperties {
 

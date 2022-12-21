@@ -10,7 +10,7 @@ public class RedisCaffeineCacheManager extends com.pig4cloud.plugin.cache.suppor
 
     @Override
     public RedisCaffeineCache createCache(String name) {
-        return new RedisCaffeineCache(name, getStringKeyRedisTemplate(), caffeineCache(), getCacheConfigProperties());
+        return new RedisCaffeineCache(name, getStringKeyRedisTemplate(), caffeineCache(name), getCacheConfigProperties());
     }
 
     @Override
